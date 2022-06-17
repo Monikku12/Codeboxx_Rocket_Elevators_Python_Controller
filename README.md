@@ -1,34 +1,47 @@
-# Rocket-Elevators-Python-Controller
-This is the template to use for the python residential controller. You will find the classes that should be used along with some methods described in the requirements. The necessary file to run some tests is also included. 
+# Description
 
-### Installation
+This program controls a Column of elevators.
 
-First, depending on your python version, make sure to install the Package Installer for Python (PIP) if needed:
+It sends an elevator fetch a user when a button on a floor is press and it takes
+this user to its desired floor when the corresponding button inside the elevator is pressed.
+
+The program first creates the columns, elevators, buttons and other variables it needs to operate depending on the data you will input. From then, the program operates and controls the elevators in accordance of you scenario.
+
+The elevator selection is based on a calculation determinating the best elevator possible. This calculation considers the status of the elevator, its position and its direction if it's moving.
+
+# Dependencies
+
+To be able to run the program, you need to have the python language installed. 
+
+Depending on your python version, you want to make sure to install the Package Installer for Python (PIP) if needed:
 
 https://pip.pypa.io/en/stable/installing/
 
-Next, install Pytest:
+# Usage
 
-https://docs.pytest.org/en/6.2.x/getting-started.html
+To use the program, follow the steps below:
 
-### Running the tests
+- If you have your own output file, you need to link both file together by adding this line to the top of your file <import residential_controller>.
 
-To launch the tests:
+- If you don't have an external file or if you wish to run a scenario directly in the file, you need to fill the TEMPLATE section 
+at the bottom of the file. Fill the TEMPLATE by entering your own data by replacing the text with the <>. 
 
-`pytest`
+## Example
 
-With a fully completed project, you should get an output like:
+Here is the empty TEMPLATE:
 
-![Screenshot from 2021-06-15 13-13-13](https://user-images.githubusercontent.com/28630658/122095645-a41fa000-cddb-11eb-9322-81a766cce4bb.png)
+TEMPLATE - empty
+templateColumn = Column(1, <numberOfFloors>, <numberOfElevators>)
+templateColumn.elevatorList[0].currentFloor = <yourFirstElevatorCurrentFloor>
+templateColumn.elevatorList[1].currentFloor = <yourSecondElevatorCurrentFloor>
+elevator = templateColumn.requestElevator(<yourCurrentFloor>, "<yourRequestedDirection>")
+elevator.requestFloor(<yourRequestedFloorNumber>)
 
-You can also get more details about each test by adding the `-v` flag: 
+TEMPLATE - filled
+templateColumn = Column(1, 10, 2)
+templateColumn.elevatorList[0].currentFloor = 10
+templateColumn.elevatorList[1].currentFloor = 3
+elevator = templateColumn.requestElevator(1, "up")
+elevator.requestFloor(6)
 
-`pytest -v` 
-
-which should give something like: 
-
-![Screenshot from 2021-06-15 13-13-33](https://user-images.githubusercontent.com/28630658/122095759-c74a4f80-cddb-11eb-999d-dfe35dbe7d18.png)
-
-The test file can be left in your final project but no scenarios should be present in your code. The grader will run tests similar to the ones provided.
-
-Of course, make sure to edit this Readme file to describe your own project!
+Which means you have a building with one column of 2 elevators. The first elevator is on the 10th floor and the second elevator is on the third floor. Someone enters the building and press the button to call the elevator. In this case, the best elevator to reach the users will be the second elevator. The program will then operate the second elevator to pick up the users and bring him to the 6F like requested. 

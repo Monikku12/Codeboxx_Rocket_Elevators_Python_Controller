@@ -14,7 +14,6 @@ class Column:
         # ---------------------------------Methods--------------------------------------------
     def createCallButtons(self, _amountOfFloors):
         global callButtonID
-        print ("Create Call Button")
         buttonFloor = 1            
         for i in range (_amountOfFloors):
             if (i < _amountOfFloors): # If it's not the last floor
@@ -28,14 +27,12 @@ class Column:
                 buttonFloor+=1
 
     def createElevators(self, _amountOfFloors, _amountOfElevators):
-        print ("Create Elevator")
         for _amountOfElevators in range(_amountOfElevators):
             elevator = Elevator(_amountOfElevators+1, _amountOfFloors) #id, status, amountOfFloors, currentFloor
             self.elevatorList.append(elevator)
 
         # Simulate when a user press a button outside the elevator
     def requestElevator(self, floor, direction):
-        print ("Request Elevator")        
         elevator = self.findElevator(floor, direction)
         elevator.floorRequestList.append(floor)
         elevator.move()
@@ -47,7 +44,6 @@ class Column:
         # higher values than what could be possibly calculated, the first elevator will always become the default bestElevator,
         # before being compared with to other elevators. If two elevators get the same score, the nearest one is prioritized.
     def findElevator(self, requestedFloor, requestedDirection):
-        print ("find elevator")
         bestElevator = None
         bestScore = 5
         referenceGap = 10000000
@@ -69,12 +65,10 @@ class Column:
                 # The elevator is not available, but still could take the call if nothing better is found
             else:
                 bestElevatorInformations = self.checkIfElevatorIsBetter(4, elevator, bestElevatorInformations, requestedFloor)
-        print ("Best elevator", bestElevatorInformations["bestElevator"])
         elevator = bestElevatorInformations.get("bestElevator")
         return elevator
 
     def checkIfElevatorIsBetter(self, scoreToCheck, newElevator, bestElevatorInformations, floor):
-        print ("Check if elevator is better")
         if (scoreToCheck < bestElevatorInformations["bestScore"]):
             bestElevatorInformations["bestScore"] = scoreToCheck
             bestElevatorInformations["bestElevator"] = newElevator
@@ -101,7 +95,6 @@ class Elevator:
 
     def createFloorRequestButtons(self, _amountOfFloors,):
         global floorRequestButtonID
-        print ("create Floor Request Buttons")
         buttonFloor = 1    
         for _amountOfFloors in range(_amountOfFloors):
             floorRequestButton = FloorRequestButton(floorRequestButtonID, buttonFloor)
@@ -111,13 +104,11 @@ class Elevator:
 
         # Simulate when a user press a button inside the elevator
     def requestFloor(self, floor):
-        print ("Request Floor")
         self.floorRequestList.append(floor)
         self.move()
         self.operateDoors()
 
     def move(self):
-        print ("Move")
         while (len(self.floorRequestList) != 0):
             destination = self.floorRequestList[0]
             self.status = "moving"
@@ -138,16 +129,13 @@ class Elevator:
         self.status = "idle"
 
     def sortFloorList(self):
-        print ("Sort Floor list")
         if (self.direction == "up"):
             self.floorRequestList.sort
         else:
             self.floorRequestList.reverse
 
     def operateDoors(self):
-        print("operate Doors")
         self.door.status = "opened"
-        print("Wait 5 secondes.")
         obstruction = None
         if self != "overweight":
             self.door.status = "closing"
@@ -157,8 +145,7 @@ class Elevator:
                 self.operateDoors
         else:
             while self.isOverweight:
-                    print("Activate overweight alarm")
-            self.operateDoors
+                self.operateDoors
 
 
 
@@ -181,12 +168,15 @@ class Door:
         self.status = "closed"
 
 
-# Scenario 1
-testColumn = Column(1, 10, 2)
-testColumn.elevatorList[0].currentFloor = 2
-testColumn.elevatorList[1].currentFloor = 6
-
-elevator = testColumn.requestElevator(3, "up")
-elevator.requestFloor(7)
-
 # ******************
+
+# To run your own simulation, uncomment the TEMPLATE section below and enter your own value in the different fields. 
+
+# TEMPLATE
+# templateColumn = Column(1, <numberOfFloors>, <numberOfElevators>)
+# templateColumn.elevatorList[0].currentFloor = <yourFirstElevatorCurrentFloor>
+# templateColumn.elevatorList[1].currentFloor = <yourSecondElevatorCurrentFloor>
+# elevator = templateColumn.requestElevator(<yourCurrentFloor>, "<yourRequestedDirection>")
+# elevator.requestFloor(<yourRequestedFloorNumber>)
+
+#  ******************
