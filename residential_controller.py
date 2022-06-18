@@ -93,7 +93,7 @@ class Elevator:
         self.floorRequestList = []
         self.createFloorRequestButtons(_amountOfFloors)
 
-    def createFloorRequestButtons(self, _amountOfFloors,):
+    def createFloorRequestButtons(self, _amountOfFloors):
         global floorRequestButtonID
         buttonFloor = 1    
         for _amountOfFloors in range(_amountOfFloors):
